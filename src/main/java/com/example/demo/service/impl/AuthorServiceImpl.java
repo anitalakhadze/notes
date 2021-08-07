@@ -6,6 +6,7 @@ import com.example.demo.model.error.ApiException;
 import com.example.demo.model.error.ErrorCode;
 import com.example.demo.model.request.CreateAuthorRequest;
 import com.example.demo.model.response.AuthorResponse;
+import com.example.demo.model.response.NoteResponse;
 import com.example.demo.repository.AuthorRepository;
 import com.example.demo.repository.NoteRepository;
 import com.example.demo.service.AuthorService;
@@ -44,8 +45,12 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<Note> getNotesByAuthorId(Long id) {
-        return notesRepository.findAllByAuthor_Id(id);
+    public List<NoteResponse> getNotesByAuthorId(Long id) {
+        return notesRepository
+                .findAllByAuthor_Id(id)
+                .stream()
+                .map(NoteResponse::fromNote)
+                .collect(Collectors.toList());
     }
 
     @Override
