@@ -2,6 +2,8 @@ package com.example.demo.service.impl;
 
 import com.example.demo.model.entity.Author;
 import com.example.demo.model.entity.Note;
+import com.example.demo.model.error.ApiException;
+import com.example.demo.model.error.ErrorCode;
 import com.example.demo.model.request.CreateNoteRequest;
 import com.example.demo.model.request.UpdateNoteRequest;
 import com.example.demo.model.response.NoteResponse;
@@ -10,6 +12,7 @@ import com.example.demo.repository.NoteRepository;
 import com.example.demo.service.NotesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,16 +40,15 @@ public class NoteServiceImpl implements NotesService {
     @Override
     public NoteResponse getNote(Long id) {
         log.info("Getting note detailed info for id {}", id);
-        Note note = noteRepository.getById(id);
+        Note note = noteRepository.findById(id)
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND));
         return NoteResponse.fromNote(note);
     }
 
     @Override
     public Long addNote(CreateNoteRequest createNoteRequest) {
-        Author author = authorRepository.getById(createNoteRequest.getAuthorId());
-        if (author == null) {
-
-        }
+        Author author = authorRepository.findById(createNoteRequest.getAuthorId())
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND));
 
         Note note = Note.builder()
                 .subject(createNoteRequest.getSubject())
@@ -59,6 +61,8 @@ public class NoteServiceImpl implements NotesService {
 
     @Override
     public void deleteNote(Long id) {
+        Note note = noteRepository.findById(id)
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND));
         noteRepository.deleteById(id);
     }
 
