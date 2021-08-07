@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.entity.Author;
 import com.example.demo.model.entity.Note;
 import com.example.demo.model.request.CreateAuthorRequest;
+import com.example.demo.model.response.AuthorResponse;
 import com.example.demo.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +21,12 @@ public class AuthorController {
     }
 
     @GetMapping
-    public List<Author> getAuthors() {
+    public List<AuthorResponse> getAuthors() {
         return authorService.getAuthors();
     }
 
     @GetMapping("/{id}")
-    public Author getAuthor(@PathVariable Long id) {
+    public AuthorResponse getAuthor(@PathVariable Long id) {
         return authorService.getAuthor(id);
     }
 

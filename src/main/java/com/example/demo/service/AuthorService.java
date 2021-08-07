@@ -3,13 +3,14 @@ package com.example.demo.service;
 import com.example.demo.model.entity.Author;
 import com.example.demo.model.entity.Note;
 import com.example.demo.model.request.CreateAuthorRequest;
+import com.example.demo.model.response.AuthorResponse;
 
 import java.util.List;
 
 public interface AuthorService {
-    List<Author> getAuthors();
+    List<AuthorResponse> getAuthors();
 
-    Author getAuthor(Long id);
+    AuthorResponse getAuthor(Long id);
 
     List<Note> getNotesByAuthorId(Long id);
 

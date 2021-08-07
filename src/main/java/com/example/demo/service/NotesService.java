@@ -2,19 +2,21 @@ package com.example.demo.service;
 
 import com.example.demo.model.entity.Note;
 import com.example.demo.model.request.CreateNoteRequest;
+import com.example.demo.model.request.UpdateNoteRequest;
+import com.example.demo.model.response.NoteResponse;
 
 import java.util.List;
 
 public interface NotesService {
 
-    List<Note> getNotes();
+    List<NoteResponse> getNotes();
 
-    Note getNote(Long id);
+    NoteResponse getNote(Long id);
 
     Long addNote(CreateNoteRequest note);
 
     void deleteNote(Long id);
 
-    void updateNote(Long id, Note note);
+    void updateNote(Long id, UpdateNoteRequest updateNoteRequest);
 
 }

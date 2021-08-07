@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.model.entity.Note;
 import com.example.demo.model.request.CreateNoteRequest;
+import com.example.demo.model.request.UpdateNoteRequest;
+import com.example.demo.model.response.NoteResponse;
 import com.example.demo.service.NotesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +22,12 @@ public class NoteController {
     }
 
     @GetMapping
-    public List<Note> getNotes() {
+    public List<NoteResponse> getNotes() {
         return notesService.getNotes();
     }
 
     @GetMapping("/{id}")
-    public Note getNote(@PathVariable Long id) {
+    public NoteResponse getNote(@PathVariable Long id) {
         return notesService.getNote(id);
     }
 
@@ -40,7 +42,7 @@ public class NoteController {
     }
 
     @PutMapping("/{id}")
-    public void replaceNote(@PathVariable Long id, @RequestBody Note note) {
-        notesService.updateNote(id, note);
+    public void replaceNote(@PathVariable Long id, @RequestBody UpdateNoteRequest updateNoteRequest) {
+        notesService.updateNote(id, updateNoteRequest);
     }
 }
